@@ -1,0 +1,74 @@
+service: cofee-shop-api
+frameworkVersion: "4"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  stage: ${opt:stage}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:Scan
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: arn:aws:dynamodb:${self:provider.region}:*:table/CoffeeOrders-${self:provider.stage}
+
+functions:
+  createCoffee:
+    handler: createCoffee.handler
+    environment:
+      COFFEE_ORDERS_TABLE: CoffeeOrders-${self:provider.stage}
+    events:
+      -http: 
+         path: cofee
+         method: post
+
+  getCoffee: 
+    handler: getCoffee.handler
+    environment: 
+      COFFEE_ORDERS_TABLE: CoffeeOrders-${self:provider.stage}
+    events: 
+      -http:
+         path: cofee
+         method: get
+
+  updateCoffee:
+    handler: updateCoffee.handler
+    environment:
+      COFFEE_ORDERS_TABLE: CoffeeOrders-${self:provider.stage}
+    events:
+      - http:  
+          path: coffee  
+          method: put  
+
+  deleteCoffee:  
+    handler: deleteCoffee.handler
+    environment:
+      COFFEE_ORDERS_TABLE: CoffeeOrders-${self:provider.stage}
+    events:
+      - http:
+          path: coffee
+          method: delete        
+
+  resources:
+  Resources:
+    CoffeeTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: CoffeeOrders-${self:provider.stage}
+        AttributeDefinitions:
+          - AttributeName: OrderId
+            AttributeType: S
+          - AttributeName: CustomerName
+            AttributeType: S
+        KeySchema:
+          - AttributeName: OrderId
+            KeyType: HASH
+          - AttributeName: CustomerName
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
