@@ -1,4 +1,4 @@
-name: deploy-coffee-shop-api
+name: deploy-coffe-shop-api
 
 on:
   push:
