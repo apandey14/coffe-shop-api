@@ -24,18 +24,18 @@ functions:
     environment:
       COFFEE_ORDERS_TABLE: CoffeeOrders-${self:provider.stage}
     events:
-      -http: 
-         path: cofee
-         method: post
+      - http: 
+          path: cofee
+          method: post
 
   getCoffee: 
     handler: getCoffee.handler
     environment: 
       COFFEE_ORDERS_TABLE: CoffeeOrders-${self:provider.stage}
     events: 
-      -http:
-         path: cofee
-         method: get
+      - http:
+          path: cofee
+          method: get
 
   updateCoffee:
     handler: updateCoffee.handler
@@ -55,7 +55,7 @@ functions:
           path: coffee
           method: delete        
 
-  resources:
+resources:
   Resources:
     CoffeeTable:
       Type: AWS::DynamoDB::Table
