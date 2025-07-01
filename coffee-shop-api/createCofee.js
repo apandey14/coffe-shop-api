@@ -1,4 +1,4 @@
-const AWS =  require('aws-sdk');
+const AWS = require('aws-sdk'); 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const { v4: uuidv4 } = require('uuid');
 
@@ -7,29 +7,27 @@ module.exports.handler = async (event) => {
     const customerName = requestBody.customer_name;
     const coffeeBlend = requestBody.coffee_blend;
     const orderId = uuidv4();
+
     const params = {
-        TableName: ProcessingInstruction.env.COFFEE_ORDERS_TABLE,
+        TableName: process.env.COFFEE_ORDERS_TABLE,  // ✅ Corrected
         Item: { 
             OrderId: orderId,
             CustomerName: customerName,
-            CofeeBlend: coffeeBlend,
+            CoffeeBlend: coffeeBlend,
             OrderStatus: 'Pending'
         }
     };
 
-   try {
-     await dynamoDb.put(params).promise();
-     return { 
-        statusCode: 200,
-        body: JSON.stringify({ message: 'Order created successfully!', OrderId: orderId })
-     };
-
-   }  catch (error) {
-    return {
-        statusCode: 500,
-        body: JSON.stringify({ error: `Could not create order: ${error.message}` })
+    try {
+        await dynamoDb.put(params).promise();
+        return { 
+            statusCode: 200,
+            body: JSON.stringify({ message: 'Order created successfully!', OrderId: orderId })
+        };
+    } catch (error) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: `Could not create order: ${error.message}` })
+        };
     }
-   }
-
-}
-
+};
