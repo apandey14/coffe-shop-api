@@ -1,4 +1,4 @@
-service: cofee-shop-api
+service: coffe-shop-api
 frameworkVersion: "4"
 
 provider:
