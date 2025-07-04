@@ -27,6 +27,7 @@ functions:
       - http: 
           path: cofee
           method: post
+          cors: true
 
   getCoffee: 
     handler: getCoffee.handler
@@ -36,6 +37,7 @@ functions:
       - http:
           path: cofee
           method: get
+          cors: true
 
   updateCoffee:
     handler: updateCoffee.handler
@@ -44,7 +46,8 @@ functions:
     events:
       - http:  
           path: coffee  
-          method: put  
+          method: put
+          cors: true  
 
   deleteCoffee:  
     handler: deleteCoffee.handler
@@ -53,7 +56,8 @@ functions:
     events:
       - http:
           path: coffee
-          method: delete        
+          method: delete
+          cors: true        
 
 resources:
   Resources:
