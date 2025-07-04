@@ -21,11 +21,19 @@ module.exports.handler = async (event) => {
     await dynamoDb.update(params).promise();
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',  // <--- THIS IS CORS FIX
+        'Access-Control-Allow-Credentials': true,
+      },
       body: JSON.stringify({ message: 'Order status updated successfully!', OrderId: order_id })
     };
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',  // <--- THIS IS CORS FIX
+        'Access-Control-Allow-Credentials': true,
+      },
       body: JSON.stringify({ error: `Could not update order: ${error.message}` })
     };
   }
