@@ -22,11 +22,19 @@ module.exports.handler = async (event) => {
         await dynamoDb.put(params).promise();
         return { 
             statusCode: 200,
+            headers: {
+            'Access-Control-Allow-Origin': '*',  // <--- THIS IS CORS FIX
+            'Access-Control-Allow-Credentials': true,
+            },
             body: JSON.stringify({ message: 'Order created successfully!', OrderId: orderId })
         };
     } catch (error) {
         return {
             statusCode: 500,
+            headers: {
+            'Access-Control-Allow-Origin': '*',  // <--- THIS IS CORS FIX
+            'Access-Control-Allow-Credentials': true,
+            },            
             body: JSON.stringify({ error: `Could not create order: ${error.message}` })
         };
     }

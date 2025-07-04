@@ -27,14 +27,8 @@ functions:
       - http: 
           path: cofee
           method: post
-          cors:
-          origin: 'http://localhost:3000'
-          headers:
-            - Content-Type
-            - X-Amz-Date
-            - Authorization
-            - X-Api-Key
-          allowCredentials: false
+          cors: true
+
   getCoffee: 
     handler: getCoffee.handler
     environment: 
@@ -43,14 +37,8 @@ functions:
       - http:
           path: cofee
           method: get
-          cors:
-          origin: 'http://localhost:3000'
-          headers:
-            - Content-Type
-            - X-Amz-Date
-            - Authorization
-            - X-Api-Key
-          allowCredentials: false
+          cors: true
+
   updateCoffee:
     handler: updateCoffee.handler
     environment:
@@ -59,14 +47,8 @@ functions:
       - http:  
           path: coffee  
           method: put
-          cors:
-          origin: 'http://localhost:3000'
-          headers:
-            - Content-Type
-            - X-Amz-Date
-            - Authorization
-            - X-Api-Key
-          allowCredentials: false
+          cors: true  
+
   deleteCoffee:  
     handler: deleteCoffee.handler
     environment:
@@ -75,14 +57,8 @@ functions:
       - http:
           path: coffee
           method: delete
-          cors:
-          origin: 'http://localhost:3000'
-          headers:
-            - Content-Type
-            - X-Amz-Date
-            - Authorization
-            - X-Api-Key
-          allowCredentials: false
+          cors: true        
+
 resources:
   Resources:
     CoffeeTable:
